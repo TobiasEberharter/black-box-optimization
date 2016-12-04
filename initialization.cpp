@@ -19,13 +19,12 @@
  * will be corrected by the "replaceviolations" function
  *
  * !! srand(time(0)); needs to be in the main function !!
- *
+ * !! currently no evaluation of the population implemented !!
  * parameters: int width, int height, int turbines, int pop_size
  * return: std::vector<individual> population
  *
  */
-std::vector<individual> initialization::initialization_1(int width,int height,
-		int turbines,int pop_size) {
+std::vector<individual> initialization::initialization_1(WindScenario wscenario,int pop_size) {
 
 	std::vector<individual> population;
 	individual indiv;
@@ -36,23 +35,35 @@ std::vector<individual> initialization::initialization_1(int width,int height,
 		//initiate layout (coordinates)
 		for (int i = 0;i < turbines; i++) {
 			//creates coordinates and puts them into the individual
-			coord.x = width * (double) rand() / (double) RAND_MAX;
-			coord.y = height * (double) rand() / (double) RAND_MAX;
+			coord.x = wscenario.width * (double) rand() / (double) RAND_MAX;
+			coord.y = wscenario.height * (double) rand() / (double) RAND_MAX;
 			indiv.layout.push_back(coord);
 		}
 
 		population.push_back(indiv);
 		indiv.layout.clear();
 	}
-	initialization::replace_violations(population,38.5,width,height);
+	initialization::replace_violations(population,wscenario);
 	return population;
 
 }
 
-void initialization::replace_violations(std::vector<individual> &population,double radius,int width,int height) {
+/* replace_violations
+ *
+ * This functions takes a population reference and the layout
+ * constraints as parameters, and automatically corrects
+ * all turbine positions within the given population by new
+ * random positions. No return value.
+ *
+ * parameters: std::vector<individual> &population
+ * 			   double radius, int width, int height
+ *
+ * return: void
+ */
+void initialization::replace_violations(std::vector<individual> &population,WindScenario wscenario) {
 
 
-	radius = radius * 8.001; //distance must be radius*8
+	double radius = wscenario.R * 8.001; //distance must be radius*8
 	//population.at(i).layout.at(j).x
 	//thirst loop to pick an individual, second to pick a coordinate to be checked
 	//third loop to compare the chosen coordinate with all other coordinates
@@ -98,8 +109,8 @@ void initialization::replace_violations(std::vector<individual> &population,doub
 				// other coordinates within the individual will be checked against
 				// the new one (coord = 0)
 
-				population.at(i).layout.at(j).x = width * (double) rand() / (double) RAND_MAX;
-				population.at(i).layout.at(j).y = height * (double) rand() / (double) RAND_MAX;
+				population.at(i).layout.at(j).x = wscenario.width * (double) rand() / (double) RAND_MAX;
+				population.at(i).layout.at(j).y = wscenario.height * (double) rand() / (double) RAND_MAX;
 				coord = 0;
 			}
 
