@@ -10,7 +10,7 @@
 
 #include <vector>
 #include "structures.hpp"
-namespace  	initialization {
+namespace initialization {
 /* initialization_1
  *
  * This function takes  the relevant layout data as parameter and produces
@@ -24,7 +24,7 @@ namespace  	initialization {
  * return: std::vector<individual> population
  *
  */
-std::vector<individual> initialization_1(int width,int height,int turbines,int pop_size);
+std::vector<individual> initialization_1(WindScenario wscenario,int pop_size);
 
 
 /* replace_violations
@@ -39,7 +39,7 @@ std::vector<individual> initialization_1(int width,int height,int turbines,int p
  *
  * return: void
  */
-void replace_violations(std::vector<individual> &population,double radius,int width,int height);
+void replace_violations(std::vector<individual> &population,WindScenari wscenario);
 }
 
 
