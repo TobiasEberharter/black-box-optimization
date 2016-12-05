@@ -13,14 +13,15 @@
 
 /* initialization_1
  *
- * This function takes  the relevant layout data as parameter and produces
+ * This function takes  the WindScenario as parameter and produces
  * a population / vector of those turbine layouts.
  * The returned layouts are completely random based and
  * will be corrected by the "replaceviolations" function
  *
  * !! srand(time(0)); needs to be in the main function !!
- * !! currently no evaluation of the population implemented !!
- * parameters: int width, int height, int turbines, int pop_size
+ * !! currently no evaluation of the population implemented !
+ !
+ * parameters: WindScenario swscenario, int pop_size
  * return: std::vector<individual> population
  *
  */
@@ -51,7 +52,7 @@ std::vector<individual> initialization::initialization_1(WindScenario wscenario,
 /* replace_violations
  *
  * This functions takes a population reference and the layout
- * constraints as parameters, and automatically corrects
+ * constraints from the WindScenario as parameters, and automatically corrects
  * all turbine positions within the given population by new
  * random positions. No return value.
  *
